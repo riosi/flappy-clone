@@ -1,6 +1,7 @@
 push = require 'push'
 Class = require 'class'
 require 'Bird'
+require 'Pipe'
 
 WINDOW_WIDTH = 1280
 WINDOW_HEIGHT = 720
@@ -23,6 +24,8 @@ local GROUND_SCROLL_SPEED = 60
 local BACKGROUND_LOOPING_POINT = 413
 
 local bird = Bird()
+local pipes = {}
+local spawnTimer = 0
 
 function love.load()
     -- filter stops the res from being blurry
@@ -70,7 +73,23 @@ function love.update(dt)
     groundScroll = (groundScroll + GROUND_SCROLL_SPEED * dt) 
         % VIRTUAL_WIDTH
 
+    spawnTimer = spawnTimer + dt
+
+    if spawnTimer > 2 then
+        table.insert(pipes, Pipe())
+        spawnTimer = 0
+    end
+
     bird:update(dt)
+
+    for k, pipe in pairs(pipes) do
+        pipe:update(dt)
+
+        if pipe.x < -pipe.width then
+            table.remove(pipes, k)
+        end
+        
+    end
 
     love.keyboard.keysPressed = {}
 end
@@ -78,7 +97,13 @@ end
 function love.draw()
     push:start()
 
+
     love.graphics.draw(background, -backgroundScroll, 0)
+
+    for k, pipe in pairs(pipes) do
+        pipe:render()
+    end
+
     love.graphics.draw(ground, -groundScroll, VIRTUAL_HEIGHT - 16)
    
     bird:render()

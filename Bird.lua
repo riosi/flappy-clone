@@ -20,7 +20,7 @@ function Bird:init()
 end
 
 function Bird:update(dt)
-    -- apply gravity to velocity
+    -- apply gravity to velocity (dy)
      self.dy = self.dy + GRAVITY * dt
 
     -- if space was pressed it adds -5 to velocity, going up on Y position
