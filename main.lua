@@ -8,11 +8,15 @@ WINDOW_HEIGHT = 720
 VIRTUAL_WIDTH = 512
 VIRTUAL_HEIGHT = 288
 
+-- background image and starting scroll location (X axis)
 local background = love.graphics.newImage('background.png')
 local backgroundScroll = 0
+
+-- ground image and starting scroll location (X axis)
 local ground = love.graphics.newImage('ground.png')
 local groundScroll = 0
 
+-- speed at which we should scroll our images, scaled by dt
 local BACKGROUND_SCROLL_SPEED = 30
 local GROUND_SCROLL_SPEED = 60
 
@@ -58,14 +62,14 @@ function love.keyboard.wasPressed(key)
 end
 
 function love.update(dt)
-    -- o scroll ganha o valor dele mesmo + a velocidade que colocamos * deltaTime
-    -- e usamos o module pro looping point
+    -- scroll background by preset speed * dt, looping back to 0 after the looping point
     backgroundScroll = (backgroundScroll + BACKGROUND_SCROLL_SPEED * dt) 
         % BACKGROUND_LOOPING_POINT
-    
-    groundScroll = (groundScroll + GROUND_SCROLL_SPEED * dt)
+
+    -- scroll ground by preset speed * dt, looping back to 0 after the screen width passes
+    groundScroll = (groundScroll + GROUND_SCROLL_SPEED * dt) 
         % VIRTUAL_WIDTH
-  
+
     bird:update(dt)
 
     love.keyboard.keysPressed = {}

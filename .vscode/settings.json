@@ -13,6 +13,7 @@
     ],
     "Lua.workspace.checkThirdParty": false,
     "Lua.diagnostics.disable": [
-        "missing-parameter"
+        "missing-parameter",
+        "undefined-field"
     ]
 }
