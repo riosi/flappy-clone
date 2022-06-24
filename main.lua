@@ -50,7 +50,6 @@ function love.keypressed(key)
 end
 
 function love.keyboard.wasPressed(key)
-
     if love.keyboard.keysPressed[key] then
         return true
     else
@@ -66,7 +65,7 @@ function love.update(dt)
     
     groundScroll = (groundScroll + GROUND_SCROLL_SPEED * dt)
         % VIRTUAL_WIDTH
-
+  
     bird:update(dt)
 
     love.keyboard.keysPressed = {}
@@ -77,7 +76,7 @@ function love.draw()
 
     love.graphics.draw(background, -backgroundScroll, 0)
     love.graphics.draw(ground, -groundScroll, VIRTUAL_HEIGHT - 16)
-
+   
     bird:render()
 
     push:finish()

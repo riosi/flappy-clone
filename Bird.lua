@@ -14,6 +14,9 @@ function Bird:init()
     -- divide the width by 2 and shift it to the left 
     self.x = VIRTUAL_WIDTH / 2 - (self.width / 2)
     self.y = VIRTUAL_HEIGHT / 2 - (self.height / 2)
+
+    -- Y velocity; gravity
+    self.dy = 0
 end
 
 function Bird:update(dt)
