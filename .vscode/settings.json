@@ -5,7 +5,12 @@
         "class",
         "Class",
         "class_commons",
-        "common"
+        "common",
+        "PIPE_HEIGHT",
+        "PipePair",
+        "pipes",
+        "PIPE_WIDTH",
+        "PIPE_SPEED"
     ],
     "Lua.runtime.version": "LuaJIT",
     "Lua.workspace.library": [
