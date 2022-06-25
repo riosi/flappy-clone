@@ -30,6 +30,7 @@ local pipePairs = {}
 local spawnTimer = 0
 
 local lastY = -PIPE_HEIGHT + math.random(80) + 20
+local scrolling = true
 
 function love.load()
     -- filter stops the res from being blurry
@@ -69,8 +70,9 @@ function love.keyboard.wasPressed(key)
 end
 
 function love.update(dt)
-    -- scroll background by preset speed * dt, looping back to 0 after the looping point
-    backgroundScroll = (backgroundScroll + BACKGROUND_SCROLL_SPEED * dt)
+    if scrolling then
+            -- scroll background by preset speed * dt, looping back to 0 after the looping point
+        backgroundScroll = (backgroundScroll + BACKGROUND_SCROLL_SPEED * dt)
         % BACKGROUND_LOOPING_POINT
 
     -- scroll ground by preset speed * dt, looping back to 0 after the screen width passes
@@ -92,6 +94,16 @@ function love.update(dt)
 
         for k, pair in pairs(pipePairs) do
             pair:update(dt)
+
+            for l, pipe in pairs(pair.pipes) do
+                if bird:collides(pipe) then
+                    scrolling = false
+                end
+            end
+
+            if pair.x < -PIPE_WIDTH then
+                pair.remove = true
+            end
         end
 
         for k, pair in pairs(pipePairs) do
@@ -99,7 +111,8 @@ function love.update(dt)
                 table.remove(pipePairs, k)
         end
     end
-        love.keyboard.keysPressed = {}
+end
+    love.keyboard.keysPressed = {}
     
 end
 -- render function
